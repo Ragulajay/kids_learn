@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Challenge</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #equationContainer {
+            font-size: 24px;
+            margin: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        #inputBox {
+            font-size: 20px;
+            margin: 10px;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        #result {
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        #submitButton {
+            font-size: 18px;
+            padding: 8px 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+
+        #score {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <h1>Math Challenge</h1>
+        <div id="equationContainer"></div>
+        <input type="text" id="inputBox" placeholder="Your Answer">
+        <button id="submitButton" onclick="checkAnswer()">Submit</button>
+        <div id="result"></div>
+        <div id="score">Score: 0</div>
+    </div>
+
+    <script>
+        // List of math equations for the game
+        const equations = ["2 + 2", "5 * 2", "10 / 2", "8 - 4", "7 + 6"];
+
+        let currentEquationIndex = 0;
+        let currentEquation = equations[currentEquationIndex];
+        let answer = eval(currentEquation);
+        let score = 0;
+
+        // Function to display the current equation
+        function displayEquation() {
+            document.getElementById('equationContainer').innerText = currentEquation;
+        }
+
+        // Initial display
+        displayEquation();
+
+        // Function to check the answer when the submit button is clicked
+        function checkAnswer() {
+            const inputBox = document.getElementById('inputBox');
+            const resultContainer = document.getElementById('result');
+            const scoreContainer = document.getElementById('score');
+
+            const userAnswer = parseFloat(inputBox.value);
+
+            if (!isNaN(userAnswer) && userAnswer === answer) {
+                resultContainer.innerText = "Correct! Well done!";
+                score += 10;
+            } else {
+                resultContainer.innerText = "Oops! Try again.";
+            }
+
+            scoreContainer.innerText = `Score: ${score}`;
+
+            // Move to the next equation after a short delay
+            setTimeout(() => {
+                resultContainer.innerText = '';
+                inputBox.value = '';
+                nextEquation();
+                displayEquation();
+            }, 1500);
+        }
+
+        // Function to move to the next equation
+        function nextEquation() {
+            currentEquationIndex = (currentEquationIndex + 1) % equations.length;
+            currentEquation = equations[currentEquationIndex];
+            answer = eval(currentEquation);
+        }
+    </script>
+</body>
+</html>

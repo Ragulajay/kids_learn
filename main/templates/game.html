@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Games</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            color: white;
+            font-size: 24px;
+        }
+
+        #content {
+            padding: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        #playButton {
+            background-color: #3498db;
+            color: white;
+            border: none;
+        }
+
+        #learnButton {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Kids Games
+    </header>
+
+    <div id="content">
+        <p>Welcome to our fun-filled world of kids' games!</p>
+        <p>Choose an activity:</p>
+
+        <a href="{% url 'eng' %}"><button id="playButton">FILL IN THE BLANKS</button></a>
+        <a href="{% url 'mat' %}"><button id="learnButton">MATHS</button></a>
+    </div>
+</body>
+</html>

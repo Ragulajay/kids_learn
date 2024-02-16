@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Spelling Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #wordContainer {
+            font-size: 24px;
+            margin: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        #inputBox {
+            font-size: 20px;
+            margin: 10px;
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        #result {
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        #submitButton {
+            font-size: 18px;
+            padding: 8px 16px;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+        }
+
+        #cartoonContainer {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+
+        #score {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <h1>Kids Spelling Game</h1>
+        <div id="wordContainer"></div>
+        <input type="text" id="inputBox" maxlength="1" placeholder="Type a letter">
+        <button id="submitButton" onclick="checkAnswer()">Submit</button>
+        <div id="result"></div>
+        <div id="cartoonContainer"></div>
+        <div id="score">Score: 0</div>
+    </div>
+
+    <script>
+        // List of words for the game
+        const words = ["apple", "banana", "cherry", "grape", "orange"];
+
+        // Map each word to its corresponding image file
+        const wordImages = {
+            "apple": "A.jpg",
+            "banana": "banana.png",
+            "cherry": "cherry.png",
+            "grape": "grape.png",
+            "orange": "orange.png",
+        };
+
+        let currentWordIndex = 0;
+        let currentWord = words[currentWordIndex];
+        let placeholderIndex = Math.floor(Math.random() * currentWord.length);
+        let score = 0;
+
+        // Function to display the current word with a blank space
+        function displayWord() {
+            let wordWithPlaceholder = currentWord.split('');
+            wordWithPlaceholder[placeholderIndex] = '_';
+            document.getElementById('wordContainer').innerText = wordWithPlaceholder.join('');
+        }
+
+        // Function to display a cartoon based on the current word
+        function displayCartoon() {
+            const cartoonContainer = document.getElementById('cartoonContainer');
+            const currentImage = wordImages[currentWord];
+            cartoonContainer.innerHTML = `<img src="${currentImage}" alt="${currentWord}" style="max-width: 100%;">`;
+        }
+
+        // Initial display
+        displayWord();
+        displayCartoon();
+
+        // Function to check the answer when the submit button is clicked
+        function checkAnswer() {
+            const inputBox = document.getElementById('inputBox');
+            const resultContainer = document.getElementById('result');
+            const scoreContainer = document.getElementById('score');
+
+            const userAnswer = inputBox.value.toLowerCase();
+            const correctAnswer = currentWord[placeholderIndex];
+
+            if (userAnswer === correctAnswer) {
+                resultContainer.innerText = "Correct! Well done!";
+                score += 10;
+            } else {
+                resultContainer.innerText = "Oops! Try again.";
+            }
+
+            scoreContainer.innerText = `Score: ${score}`;
+
+            // Move to the next word after a short delay
+            setTimeout(() => {
+                resultContainer.innerText = '';
+                inputBox.value = '';
+                nextWord();
+                displayCartoon();
+            }, 1500);
+        }
+
+        // Function to move to the next word
+        function nextWord() {
+            currentWordIndex = (currentWordIndex + 1) % words.length;
+            currentWord = words[currentWordIndex];
+            placeholderIndex = Math.floor(Math.random() * currentWord.length);
+            displayWord();
+        }
+    </script>
+
+</body>
+</html>
